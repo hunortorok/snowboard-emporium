@@ -1,6 +1,6 @@
 import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
-import {useAside} from './Aside';
+import {useUIStore} from '~/stores/ui.store';
 
 /**
  * @param {{
@@ -10,7 +10,7 @@ import {useAside} from './Aside';
  */
 export function ProductForm({productOptions, selectedVariant}) {
   const navigate = useNavigate();
-  const {open} = useAside();
+  const openCart = useUIStore((s) => s.openCart);
   return (
     <div className="product-form">
       {productOptions.map((option) => {
@@ -96,7 +96,7 @@ export function ProductForm({productOptions, selectedVariant}) {
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
-          open('cart');
+          openCart();
         }}
         lines={
           selectedVariant

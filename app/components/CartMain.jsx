@@ -1,6 +1,6 @@
 import {useOptimisticCart} from '@shopify/hydrogen';
 import {Link} from 'react-router';
-import {useAside} from '~/components/Aside';
+import {useUIStore} from '~/stores/ui.store';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
 /**
@@ -85,7 +85,7 @@ export function CartMain({layout, cart: originalCart}) {
  * }}
  */
 function CartEmpty({hidden = false}) {
-  const {close} = useAside();
+  const closeCart = useUIStore((s) => s.closeCart);
   return (
     <div hidden={hidden}>
       <br />
@@ -94,7 +94,7 @@ function CartEmpty({hidden = false}) {
         started!
       </p>
       <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
+      <Link to="/collections" onClick={closeCart} prefetch="viewport">
         Continue shopping →
       </Link>
     </div>

@@ -1,9 +1,7 @@
-import {Await} from 'react-router';
-import {Suspense} from 'react';
 import {Aside} from '~/components/Aside';
+import {CartDrawer} from '~/components/CartDrawer';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
-import {CartMain} from '~/components/CartMain';
 
 /**
  * @param {PageLayoutProps}
@@ -17,7 +15,7 @@ export function PageLayout({
 }) {
   return (
     <Aside.Provider>
-      <CartAside cart={cart} />
+      <CartDrawer cart={cart} />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       {header && (
         <Header
@@ -33,23 +31,6 @@ export function PageLayout({
         publicStoreDomain={publicStoreDomain}
       />
     </Aside.Provider>
-  );
-}
-
-/**
- * @param {{cart: PageLayoutProps['cart']}}
- */
-function CartAside({cart}) {
-  return (
-    <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await resolve={cart}>
-          {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
-          }}
-        </Await>
-      </Suspense>
-    </Aside>
   );
 }
 

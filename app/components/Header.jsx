@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import {useUIStore} from '~/stores/ui.store';
 
 /**
  * @param {HeaderProps}
@@ -110,7 +111,7 @@ function HeaderMenuMobileToggle() {
  * @param {{count: number | null}}
  */
 function CartBadge({count}) {
-  const {open} = useAside();
+  const openCart = useUIStore((s) => s.openCart);
   const {publish, shop, cart, prevCart} = useAnalytics();
 
   return (
@@ -118,7 +119,7 @@ function CartBadge({count}) {
       href="/cart"
       onClick={(e) => {
         e.preventDefault();
-        open('cart');
+        openCart();
         publish('cart_viewed', {
           cart,
           prevCart,
