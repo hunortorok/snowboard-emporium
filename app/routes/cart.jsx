@@ -2,21 +2,12 @@ import {useLoaderData, data} from 'react-router';
 import {CartForm} from '@shopify/hydrogen';
 import {CartMain} from '~/components/CartMain';
 
-/**
- * @type {Route.MetaFunction}
- */
 export const meta = () => {
   return [{title: `Hydrogen | Cart`}];
 };
 
-/**
- * @type {HeadersFunction}
- */
 export const headers = ({actionHeaders}) => actionHeaders;
 
-/**
- * @param {Route.ActionArgs}
- */
 export async function action({request, context}) {
   const {cart} = context;
 
@@ -99,16 +90,13 @@ export async function action({request, context}) {
   );
 }
 
-/**
- * @param {Route.LoaderArgs}
- */
 export async function loader({context}) {
   const {cart} = context;
   return await cart.get();
 }
 
 export default function Cart() {
-  /** @type {LoaderReturnData} */
+
   const cart = useLoaderData();
 
   return (
@@ -118,9 +106,3 @@ export default function Cart() {
     </div>
   );
 }
-
-/** @typedef {import('react-router').HeadersFunction} HeadersFunction */
-/** @typedef {import('./+types/cart').Route} Route */
-/** @typedef {import('@shopify/hydrogen').CartQueryDataReturn} CartQueryDataReturn */
-/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
-/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof action>} ActionReturnData */

@@ -11,21 +11,12 @@ const additionalContext = {
   // reviews: await createReviewsClient(env),
 };
 
-/**
- * Creates Hydrogen context for React Router 7.9.x
- * Returns HydrogenRouterContextProvider with hybrid access patterns
- * @param {Request} request
- * @param {Env} env
- * @param {ExecutionContext} executionContext
- */
 export async function createHydrogenRouterContext(
   request,
   env,
   executionContext,
 ) {
-  /**
-   * Open a cache instance in the worker and a custom session instance.
-   */
+
   if (!env?.SESSION_SECRET) {
     throw new Error('SESSION_SECRET environment variable is not set');
   }
@@ -54,5 +45,3 @@ export async function createHydrogenRouterContext(
 
   return hydrogenContext;
 }
-
-/** @typedef {Class<additionalContext>} AdditionalContextType */

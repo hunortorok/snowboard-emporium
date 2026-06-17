@@ -3,9 +3,6 @@ import {CartDrawer} from '~/components/CartDrawer';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
 
-/**
- * @param {PageLayoutProps}
- */
 export function PageLayout({
   cart,
   children = null,
@@ -34,12 +31,6 @@ export function PageLayout({
   );
 }
 
-/**
- * @param {{
- *   header: PageLayoutProps['header'];
- *   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
- * }}
- */
 function MobileMenuAside({header, publicStoreDomain}) {
   return (
     header.menu &&
@@ -55,16 +46,3 @@ function MobileMenuAside({header, publicStoreDomain}) {
     )
   );
 }
-
-/**
- * @typedef {Object} PageLayoutProps
- * @property {Promise<CartApiQueryFragment|null>} cart
- * @property {Promise<FooterQuery|null>} footer
- * @property {HeaderQuery} header
- * @property {string} publicStoreDomain
- * @property {React.ReactNode} [children]
- */
-
-/** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */
-/** @typedef {import('storefrontapi.generated').FooterQuery} FooterQuery */
-/** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */

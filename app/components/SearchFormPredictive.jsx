@@ -4,10 +4,6 @@ import {useAside} from './Aside';
 
 export const SEARCH_ENDPOINT = '/search';
 
-/**
- *  Search form component that sends search requests to the `/search` route
- * @param {SearchFormPredictiveProps}
- */
 export function SearchFormPredictive({
   children,
   className = 'predictive-search-form',
@@ -18,7 +14,7 @@ export function SearchFormPredictive({
   const navigate = useNavigate();
   const aside = useAside();
 
-  /** Reset the input value and blur the input */
+
   function resetInput(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -27,14 +23,14 @@ export function SearchFormPredictive({
     }
   }
 
-  /** Navigate to the search page with the current input value */
+
   function goToSearch() {
     const term = inputRef?.current?.value;
     void navigate(SEARCH_ENDPOINT + (term ? `?q=${term}` : ''));
     aside.close();
   }
 
-  /** Fetch search results based on the input value */
+
   function fetchResults(event) {
     void fetcher.submit(
       {q: event.target.value || '', limit: 5, predictive: true},
@@ -58,21 +54,3 @@ export function SearchFormPredictive({
     </fetcher.Form>
   );
 }
-
-/**
- * @typedef {(args: {
- *   fetchResults: (event: React.ChangeEvent<HTMLInputElement>) => void;
- *   goToSearch: () => void;
- *   inputRef: React.MutableRefObject<HTMLInputElement | null>;
- *   fetcher: Fetcher<PredictiveSearchReturn>;
- * }) => React.ReactNode} SearchFormPredictiveChildren
- */
-/**
- * @typedef {Omit<FormProps, 'children'> & {
- *   children: SearchFormPredictiveChildren | null;
- * }} SearchFormPredictiveProps
- */
-
-/** @typedef {import('react-router').FormProps} FormProps */
-/** @template T @typedef {import('react-router').Fetcher<T>} Fetcher */
-/** @typedef {import('~/lib/search').PredictiveSearchReturn} PredictiveSearchReturn */

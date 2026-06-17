@@ -1,10 +1,5 @@
 import {Image} from '@shopify/hydrogen';
 
-/**
- * @param {{
- *   image: ProductVariantFragment['image'];
- * }}
- */
 export function ProductImage({image}) {
   if (!image) {
     return <div className="product-image" />;
@@ -21,5 +16,3 @@ export function ProductImage({image}) {
     </div>
   );
 }
-
-/** @typedef {import('storefrontapi.generated').ProductVariantFragment} ProductVariantFragment */

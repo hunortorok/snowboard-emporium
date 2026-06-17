@@ -2,9 +2,6 @@ import {CartForm, Money} from '@shopify/hydrogen';
 import {useEffect, useRef} from 'react';
 import {useFetcher} from 'react-router';
 
-/**
- * @param {CartSummaryProps}
- */
 export function CartSummary({cart, layout}) {
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
@@ -29,9 +26,6 @@ export function CartSummary({cart, layout}) {
   );
 }
 
-/**
- * @param {{checkoutUrl?: string}}
- */
 function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
 
@@ -45,11 +39,6 @@ function CartCheckoutActions({checkoutUrl}) {
   );
 }
 
-/**
- * @param {{
- *   discountCodes?: CartApiQueryFragment['discountCodes'];
- * }}
- */
 function CartDiscounts({discountCodes}) {
   const codes =
     discountCodes
@@ -96,12 +85,6 @@ function CartDiscounts({discountCodes}) {
   );
 }
 
-/**
- * @param {{
- *   discountCodes?: string[];
- *   children: React.ReactNode;
- * }}
- */
 function UpdateDiscountForm({discountCodes, children}) {
   return (
     <CartForm
@@ -116,11 +99,6 @@ function UpdateDiscountForm({discountCodes, children}) {
   );
 }
 
-/**
- * @param {{
- *   giftCardCodes: CartApiQueryFragment['appliedGiftCards'] | undefined;
- * }}
- */
 function CartGiftCard({giftCardCodes}) {
   const giftCardCodeInput = useRef(null);
   const giftCardAddFetcher = useFetcher({key: 'gift-card-add'});
@@ -168,12 +146,6 @@ function CartGiftCard({giftCardCodes}) {
   );
 }
 
-/**
- * @param {{
- *   fetcherKey?: string;
- *   children: React.ReactNode;
- * }}
- */
 function AddGiftCardForm({fetcherKey, children}) {
   return (
     <CartForm
@@ -186,12 +158,6 @@ function AddGiftCardForm({fetcherKey, children}) {
   );
 }
 
-/**
- * @param {{
- *   giftCardId: string;
- *   children: React.ReactNode;
- * }}
- */
 function RemoveGiftCardForm({giftCardId, children}) {
   return (
     <CartForm
@@ -205,14 +171,3 @@ function RemoveGiftCardForm({giftCardId, children}) {
     </CartForm>
   );
 }
-
-/**
- * @typedef {{
- *   cart: OptimisticCart<CartApiQueryFragment | null>;
- *   layout: CartLayout;
- * }} CartSummaryProps
- */
-
-/** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */
-/** @typedef {import('~/components/CartMain').CartLayout} CartLayout */
-/** @typedef {import('@shopify/hydrogen').OptimisticCart} OptimisticCart */

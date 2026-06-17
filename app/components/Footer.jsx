@@ -1,9 +1,6 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from 'react-router';
 
-/**
- * @param {FooterProps}
- */
 export function Footer({footer: footerPromise, header, publicStoreDomain}) {
   return (
     <Suspense>
@@ -24,13 +21,6 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
   );
 }
 
-/**
- * @param {{
- *   menu: FooterQuery['menu'];
- *   primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
- *   publicStoreDomain: string;
- * }}
- */
 function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
     <nav className="footer-menu" role="navigation">
@@ -106,25 +96,9 @@ const FALLBACK_FOOTER_MENU = {
   ],
 };
 
-/**
- * @param {{
- *   isActive: boolean;
- *   isPending: boolean;
- * }}
- */
 function activeLinkStyle({isActive, isPending}) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
     color: isPending ? 'grey' : 'white',
   };
 }
-
-/**
- * @typedef {Object} FooterProps
- * @property {Promise<FooterQuery|null>} footer
- * @property {HeaderQuery} header
- * @property {string} publicStoreDomain
- */
-
-/** @typedef {import('storefrontapi.generated').FooterQuery} FooterQuery */
-/** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */

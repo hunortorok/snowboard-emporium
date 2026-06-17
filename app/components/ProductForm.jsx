@@ -2,12 +2,6 @@ import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
 import {useUIStore} from '~/stores/ui.store';
 
-/**
- * @param {{
- *   productOptions: MappedProductOptions[];
- *   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
- * }}
- */
 export function ProductForm({productOptions, selectedVariant}) {
   const navigate = useNavigate();
   const openCart = useUIStore((s) => s.openCart);
@@ -116,12 +110,6 @@ export function ProductForm({productOptions, selectedVariant}) {
   );
 }
 
-/**
- * @param {{
- *   swatch?: Maybe<ProductOptionValueSwatch> | undefined;
- *   name: string;
- * }}
- */
 function ProductOptionSwatch({swatch, name}) {
   const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
@@ -140,8 +128,3 @@ function ProductOptionSwatch({swatch, name}) {
     </div>
   );
 }
-
-/** @typedef {import('@shopify/hydrogen').MappedProductOptions} MappedProductOptions */
-/** @typedef {import('@shopify/hydrogen/storefront-api-types').Maybe} Maybe */
-/** @typedef {import('@shopify/hydrogen/storefront-api-types').ProductOptionValueSwatch} ProductOptionValueSwatch */
-/** @typedef {import('storefrontapi.generated').ProductFragment} ProductFragment */

@@ -4,9 +4,6 @@ import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {useUIStore} from '~/stores/ui.store';
 
-/**
- * @param {HeaderProps}
- */
 export function Header({header, cart, publicStoreDomain}) {
   const {shop, menu} = header;
   return (
@@ -25,14 +22,6 @@ export function Header({header, cart, publicStoreDomain}) {
   );
 }
 
-/**
- * @param {{
- *   menu: HeaderProps['header']['menu'];
- *   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
- *   viewport: Viewport;
- *   publicStoreDomain: HeaderProps['publicStoreDomain'];
- * }}
- */
 export function HeaderMenu({
   menu,
   primaryDomainUrl,
@@ -83,9 +72,6 @@ export function HeaderMenu({
   );
 }
 
-/**
- * @param {Pick<HeaderProps, 'cart'>}
- */
 function HeaderCtas({cart}) {
   return (
     <nav className="header-ctas" role="navigation">
@@ -107,9 +93,6 @@ function HeaderMenuMobileToggle() {
   );
 }
 
-/**
- * @param {{count: number | null}}
- */
 function CartBadge({count}) {
   const openCart = useUIStore((s) => s.openCart);
   const {publish, shop, cart, prevCart} = useAnalytics();
@@ -133,9 +116,6 @@ function CartBadge({count}) {
   );
 }
 
-/**
- * @param {Pick<HeaderProps, 'cart'>}
- */
 function CartToggle({cart}) {
   return (
     <Suspense fallback={<CartBadge count={null} />}>
@@ -167,28 +147,9 @@ const FALLBACK_HEADER_MENU = {
   ],
 };
 
-/**
- * @param {{
- *   isActive: boolean;
- *   isPending: boolean;
- * }}
- */
 function activeLinkStyle({isActive, isPending}) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
     color: isPending ? 'grey' : 'black',
   };
 }
-
-/** @typedef {'desktop' | 'mobile'} Viewport */
-/**
- * @typedef {Object} HeaderProps
- * @property {HeaderQuery} header
- * @property {Promise<CartApiQueryFragment|null>} cart
- * @property {Promise<boolean>} isLoggedIn
- * @property {string} publicStoreDomain
- */
-
-/** @typedef {import('@shopify/hydrogen').CartViewPayload} CartViewPayload */
-/** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */
-/** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */

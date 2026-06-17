@@ -3,9 +3,6 @@ import {Suspense, useEffect} from 'react';
 import {CartMain} from '~/components/CartMain';
 import {useUIStore} from '~/stores/ui.store';
 
-/**
- * @param {{cart: import('react').ComponentProps<typeof import('~/components/PageLayout').PageLayout>['cart']}}
- */
 export function CartDrawer({cart}) {
   const isCartOpen = useUIStore((s) => s.isCartOpen);
   const closeCart = useUIStore((s) => s.closeCart);

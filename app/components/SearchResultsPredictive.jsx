@@ -7,11 +7,6 @@ import {
 } from '~/lib/search';
 import {useAside} from './Aside';
 
-/**
- * Component that renders predictive search results
- * @param {SearchResultsPredictiveProps}
- * @return {React.ReactNode}
- */
 export function SearchResultsPredictive({children}) {
   const aside = useAside();
   const {term, inputRef, fetcher, total, items} = usePredictiveSearch();
@@ -26,9 +21,7 @@ export function SearchResultsPredictive({children}) {
     }
   }
 
-  /**
-   * Utility that resets the search input and closes the search aside
-   */
+
   function closeSearch() {
     resetInput();
     aside.close();
@@ -51,9 +44,6 @@ SearchResultsPredictive.Products = SearchResultsPredictiveProducts;
 SearchResultsPredictive.Queries = SearchResultsPredictiveQueries;
 SearchResultsPredictive.Empty = SearchResultsPredictiveEmpty;
 
-/**
- * @param {PartialPredictiveSearchResult<'articles'>}
- */
 function SearchResultsPredictiveArticles({term, articles, closeSearch}) {
   if (!articles.length) return null;
 
@@ -91,9 +81,6 @@ function SearchResultsPredictiveArticles({term, articles, closeSearch}) {
   );
 }
 
-/**
- * @param {PartialPredictiveSearchResult<'collections'>}
- */
 function SearchResultsPredictiveCollections({term, collections, closeSearch}) {
   if (!collections.length) return null;
 
@@ -131,9 +118,6 @@ function SearchResultsPredictiveCollections({term, collections, closeSearch}) {
   );
 }
 
-/**
- * @param {PartialPredictiveSearchResult<'pages'>}
- */
 function SearchResultsPredictivePages({term, pages, closeSearch}) {
   if (!pages.length) return null;
 
@@ -163,9 +147,6 @@ function SearchResultsPredictivePages({term, pages, closeSearch}) {
   );
 }
 
-/**
- * @param {PartialPredictiveSearchResult<'products'>}
- */
 function SearchResultsPredictiveProducts({term, products, closeSearch}) {
   if (!products.length) return null;
 
@@ -206,11 +187,6 @@ function SearchResultsPredictiveProducts({term, products, closeSearch}) {
   );
 }
 
-/**
- * @param {PartialPredictiveSearchResult<'queries', never> & {
- *   queriesDatalistId: string;
- * }}
- */
 function SearchResultsPredictiveQueries({queries, queriesDatalistId}) {
   if (!queries.length) return null;
 
@@ -225,11 +201,6 @@ function SearchResultsPredictiveQueries({queries, queriesDatalistId}) {
   );
 }
 
-/**
- * @param {{
- *   term: React.MutableRefObject<string>;
- * }}
- */
 function SearchResultsPredictiveEmpty({term}) {
   if (!term.current) {
     return null;
@@ -242,14 +213,6 @@ function SearchResultsPredictiveEmpty({term}) {
   );
 }
 
-/**
- * Hook that returns the predictive search results and fetcher and input ref.
- * @example
- * '''ts
- * const { items, total, inputRef, term, fetcher } = usePredictiveSearch();
- * '''
- * @return {UsePredictiveSearchReturn}
- */
 function usePredictiveSearch() {
   const fetcher = useFetcher({key: 'search'});
   const term = useRef('');
@@ -271,37 +234,3 @@ function usePredictiveSearch() {
 
   return {items, total, inputRef, term, fetcher};
 }
-
-/** @typedef {PredictiveSearchReturn['result']['items']} PredictiveSearchItems */
-/**
- * @typedef {{
- *   term: React.MutableRefObject<string>;
- *   total: number;
- *   inputRef: React.MutableRefObject<HTMLInputElement | null>;
- *   items: PredictiveSearchItems;
- *   fetcher: Fetcher<PredictiveSearchReturn>;
- * }} UsePredictiveSearchReturn
- */
-/**
- * @typedef {Pick<
- *   UsePredictiveSearchReturn,
- *   'term' | 'total' | 'inputRef' | 'items'
- * > & {
- *   state: Fetcher['state'];
- *   closeSearch: () => void;
- * }} SearchResultsPredictiveArgs
- */
-/**
- * @typedef {Pick<PredictiveSearchItems, ItemType> &
- *   Pick<SearchResultsPredictiveArgs, ExtraProps>} PartialPredictiveSearchResult
- * @template {keyof PredictiveSearchItems} ItemType
- * @template {keyof SearchResultsPredictiveArgs} [ExtraProps='term' | 'closeSearch']
- */
-/**
- * @typedef {{
- *   children: (args: SearchResultsPredictiveArgs) => React.ReactNode;
- * }} SearchResultsPredictiveProps
- */
-
-/** @template T @typedef {import('react-router').Fetcher<T>} Fetcher */
-/** @typedef {import('~/lib/search').PredictiveSearchReturn} PredictiveSearchReturn */

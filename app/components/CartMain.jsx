@@ -3,11 +3,7 @@ import {Link} from 'react-router';
 import {useUIStore} from '~/stores/ui.store';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
-/**
- * Returns a map of all line items and their children.
- * @param {CartLine[]} lines
- * @return {import("/Users/hunortorok/Documents/GitHub/snowboard-emporium/app/components/CartMain").LineItemChildrenMap}
- */
+
 function getLineItemChildrenMap(lines) {
   const children = {};
   for (const line of lines) {
@@ -26,11 +22,7 @@ function getLineItemChildrenMap(lines) {
   }
   return children;
 }
-/**
- * The main cart component that displays the cart items and summary.
- * It is used by both the /cart route and the cart aside dialog.
- * @param {CartMainProps}
- */
+
 export function CartMain({layout, cart: originalCart}) {
   // The useOptimisticCart hook applies pending actions to the cart
   // so the user immediately sees feedback when they modify the cart.
@@ -78,12 +70,6 @@ export function CartMain({layout, cart: originalCart}) {
   );
 }
 
-/**
- * @param {{
- *   hidden: boolean;
- *   layout?: CartMainProps['layout'];
- * }}
- */
 function CartEmpty({hidden = false}) {
   const closeCart = useUIStore((s) => s.closeCart);
   return (
@@ -100,16 +86,3 @@ function CartEmpty({hidden = false}) {
     </div>
   );
 }
-
-/** @typedef {'page' | 'aside'} CartLayout */
-/**
- * @typedef {{
- *   cart: CartApiQueryFragment | null;
- *   layout: CartLayout;
- * }} CartMainProps
- */
-/** @typedef {{[parentId: string]: CartLine[]}} LineItemChildrenMap */
-
-/** @typedef {import('@shopify/hydrogen').OptimisticCartLine} OptimisticCartLine */
-/** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */
-/** @typedef {import('~/components/CartLineItem').CartLine} CartLine */

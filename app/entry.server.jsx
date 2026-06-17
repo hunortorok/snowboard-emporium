@@ -3,13 +3,6 @@ import {isbot} from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 import {createContentSecurityPolicy} from '@shopify/hydrogen';
 
-/**
- * @param {Request} request
- * @param {number} responseStatusCode
- * @param {Headers} responseHeaders
- * @param {EntryContext} reactRouterContext
- * @param {HydrogenRouterContextProvider} context
- */
 export default async function handleRequest(
   request,
   responseStatusCode,
@@ -54,6 +47,3 @@ export default async function handleRequest(
     status: responseStatusCode,
   });
 }
-
-/** @typedef {import('@shopify/hydrogen').HydrogenRouterContextProvider} HydrogenRouterContextProvider */
-/** @typedef {import('react-router').EntryContext} EntryContext */

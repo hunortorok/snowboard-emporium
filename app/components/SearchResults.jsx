@@ -2,9 +2,6 @@ import {Link} from 'react-router';
 import {Image, Money, Pagination} from '@shopify/hydrogen';
 import {urlWithTrackingParams} from '~/lib/search';
 
-/**
- * @param {Omit<SearchResultsProps, 'error' | 'type'>}
- */
 export function SearchResults({term, result, children}) {
   if (!result?.total) {
     return null;
@@ -18,9 +15,6 @@ SearchResults.Pages = SearchResultsPages;
 SearchResults.Products = SearchResultsProducts;
 SearchResults.Empty = SearchResultsEmpty;
 
-/**
- * @param {PartialSearchResult<'articles'>}
- */
 function SearchResultsArticles({term, articles}) {
   if (!articles?.nodes.length) {
     return null;
@@ -51,9 +45,6 @@ function SearchResultsArticles({term, articles}) {
   );
 }
 
-/**
- * @param {PartialSearchResult<'pages'>}
- */
 function SearchResultsPages({term, pages}) {
   if (!pages?.nodes.length) {
     return null;
@@ -84,9 +75,6 @@ function SearchResultsPages({term, pages}) {
   );
 }
 
-/**
- * @param {PartialSearchResult<'products'>}
- */
 function SearchResultsProducts({term, products}) {
   if (!products?.nodes.length) {
     return null;
@@ -150,20 +138,3 @@ function SearchResultsProducts({term, products}) {
 function SearchResultsEmpty() {
   return <p>No results, try a different search.</p>;
 }
-
-/** @typedef {RegularSearchReturn['result']['items']} SearchItems */
-/**
- * @typedef {Pick<
- *   SearchItems,
- *   ItemType
- * > &
- *   Pick<RegularSearchReturn, 'term'>} PartialSearchResult
- * @template {keyof SearchItems} ItemType
- */
-/**
- * @typedef {RegularSearchReturn & {
- *   children: (args: SearchItems & {term: string}) => React.ReactNode;
- * }} SearchResultsProps
- */
-
-/** @typedef {import('~/lib/search').RegularSearchReturn} RegularSearchReturn */

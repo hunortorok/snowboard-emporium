@@ -2,9 +2,6 @@ import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
-/**
- * @param {Route.LoaderArgs} args
- */
 export async function loader(args) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
@@ -15,11 +12,6 @@ export async function loader(args) {
   return {...deferredData, ...criticalData};
 }
 
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- * @param {Route.LoaderArgs}
- */
 async function loadCriticalData({context, request}) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 4,
@@ -35,18 +27,12 @@ async function loadCriticalData({context, request}) {
   return {collections};
 }
 
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {Route.LoaderArgs}
- */
 function loadDeferredData({context}) {
   return {};
 }
 
 export default function Collections() {
-  /** @type {LoaderReturnData} */
+
   const {collections} = useLoaderData();
 
   return (
@@ -68,12 +54,6 @@ export default function Collections() {
   );
 }
 
-/**
- * @param {{
- *   collection: CollectionFragment;
- *   index: number;
- * }}
- */
 function CollectionItem({collection, index}) {
   return (
     <Link
@@ -135,7 +115,3 @@ const COLLECTIONS_QUERY = `#graphql
     }
   }
 `;
-
-/** @typedef {import('./+types/collections._index').Route} Route */
-/** @typedef {import('storefrontapi.generated').CollectionFragment} CollectionFragment */
-/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */

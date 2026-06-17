@@ -1,11 +1,5 @@
 import {Money} from '@shopify/hydrogen';
 
-/**
- * @param {{
- *   price?: MoneyV2;
- *   compareAtPrice?: MoneyV2 | null;
- * }}
- */
 export function ProductPrice({price, compareAtPrice}) {
   return (
     <div className="product-price">
@@ -24,5 +18,3 @@ export function ProductPrice({price, compareAtPrice}) {
     </div>
   );
 }
-
-/** @typedef {import('@shopify/hydrogen/storefront-api-types').MoneyV2} MoneyV2 */

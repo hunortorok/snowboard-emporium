@@ -16,10 +16,6 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
 
-/**
- * This is important to avoid re-fetching root queries on sub-navigations
- * @type {ShouldRevalidateFunction}
- */
 export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   // revalidate when a mutation is performed e.g add to cart, login...
   if (formMethod && formMethod !== 'GET') return true;
@@ -35,16 +31,6 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   return false;
 };
 
-/**
- * The main and reset stylesheets are added in the Layout component
- * to prevent a bug in development HMR updates.
- *
- * This avoids the "failed to execute 'insertBefore' on 'Node'" error
- * that occurs after editing and navigating to another page.
- *
- * It's a temporary fix until the issue is resolved.
- * https://github.com/remix-run/remix/issues/9242
- */
 export function links() {
   return [
     {
@@ -59,9 +45,6 @@ export function links() {
   ];
 }
 
-/**
- * @param {Route.LoaderArgs} args
- */
 export async function loader(args) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
@@ -90,11 +73,6 @@ export async function loader(args) {
   };
 }
 
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- * @param {Route.LoaderArgs}
- */
 async function loadCriticalData({context}) {
   const {storefront} = context;
 
@@ -111,12 +89,6 @@ async function loadCriticalData({context}) {
   return {header};
 }
 
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {Route.LoaderArgs}
- */
 function loadDeferredData({context}) {
   const {storefront, cart} = context;
 
@@ -139,9 +111,6 @@ function loadDeferredData({context}) {
   };
 }
 
-/**
- * @param {{children?: React.ReactNode}}
- */
 export function Layout({children}) {
   const nonce = useNonce();
 
@@ -166,7 +135,7 @@ export function Layout({children}) {
 }
 
 export default function App() {
-  /** @type {RootLoader} */
+
   const data = useRouteLoaderData('root');
 
   if (!data) {
@@ -210,9 +179,3 @@ export function ErrorBoundary() {
     </div>
   );
 }
-
-/** @typedef {LoaderReturnData} RootLoader */
-
-/** @typedef {import('react-router').ShouldRevalidateFunction} ShouldRevalidateFunction */
-/** @typedef {import('./+types/root').Route} Route */
-/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
