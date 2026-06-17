@@ -14,16 +14,14 @@ export default {
    */
   async fetch(request, env, executionContext) {
     try {
+      // Allows Storefront API, sessions, cart, and other Hydrogen features to be used in loaders and actions
       const hydrogenContext = await createHydrogenRouterContext(
         request,
         env,
         executionContext,
       );
 
-      /**
-       * Create a Hydrogen request handler that internally
-       * delegates to React Router for routing and rendering.
-       */
+      // Wraps around the React Router request handler to provide Hydrogen context to loaders and actions
       const handleRequest = createRequestHandler({
         build: serverBuild,
         mode: process.env.NODE_ENV,
@@ -32,6 +30,7 @@ export default {
 
       const response = await handleRequest(request);
 
+      // If an action or loader has modified the session, commit the changes to the response headers
       if (hydrogenContext.session.isPending) {
         response.headers.set(
           'Set-Cookie',

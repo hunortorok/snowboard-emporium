@@ -6,7 +6,7 @@ import {useAside} from '~/components/Aside';
 /**
  * @param {HeaderProps}
  */
-export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
+export function Header({header, cart, publicStoreDomain}) {
   const {shop, menu} = header;
   return (
     <header className="header">
@@ -19,7 +19,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
       />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      <HeaderCtas cart={cart} />
     </header>
   );
 }
@@ -83,20 +83,12 @@ export function HeaderMenu({
 }
 
 /**
- * @param {Pick<HeaderProps, 'isLoggedIn' | 'cart'>}
+ * @param {Pick<HeaderProps, 'cart'>}
  */
-function HeaderCtas({isLoggedIn, cart}) {
+function HeaderCtas({cart}) {
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        <Suspense fallback="Sign in">
-          <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
-          </Await>
-        </Suspense>
-      </NavLink>
-      <SearchToggle />
       <CartToggle cart={cart} />
     </nav>
   );
@@ -110,15 +102,6 @@ function HeaderMenuMobileToggle() {
       onClick={() => open('mobile')}
     >
       <h3>☰</h3>
-    </button>
-  );
-}
-
-function SearchToggle() {
-  const {open} = useAside();
-  return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
     </button>
   );
 }
@@ -178,33 +161,6 @@ const FALLBACK_HEADER_MENU = {
       title: 'Collections',
       type: 'HTTP',
       url: '/collections',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609533496',
-      resourceId: null,
-      tags: [],
-      title: 'Blog',
-      type: 'HTTP',
-      url: '/blogs/journal',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609566264',
-      resourceId: null,
-      tags: [],
-      title: 'Policies',
-      type: 'HTTP',
-      url: '/policies',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609599032',
-      resourceId: 'gid://shopify/Page/92591030328',
-      tags: [],
-      title: 'About',
-      type: 'PAGE',
-      url: '/pages/about',
       items: [],
     },
   ],

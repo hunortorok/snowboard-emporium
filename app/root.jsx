@@ -118,7 +118,7 @@ async function loadCriticalData({context}) {
  * @param {Route.LoaderArgs}
  */
 function loadDeferredData({context}) {
-  const {storefront, customerAccount, cart} = context;
+  const {storefront, cart} = context;
 
   // defer the footer query (below the fold)
   const footer = storefront
@@ -135,7 +135,6 @@ function loadDeferredData({context}) {
     });
   return {
     cart: cart.get(),
-    isLoggedIn: customerAccount.isLoggedIn(),
     footer,
   };
 }
