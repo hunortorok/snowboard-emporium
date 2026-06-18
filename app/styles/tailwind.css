@@ -3,6 +3,68 @@
 @theme {
   --color-dark: #000;
   --color-light: #fff;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-twilight-indigo-50: #eff0f5;
+  --color-twilight-indigo-100: #e0e2eb;
+  --color-twilight-indigo-200: #c1c5d7;
+  --color-twilight-indigo-300: #a2a8c3;
+  --color-twilight-indigo-400: #838baf;
+  --color-twilight-indigo-500: #636e9c;
+  --color-twilight-indigo-600: #50587c;
+  --color-twilight-indigo-700: #3c425d;
+  --color-twilight-indigo-800: #282c3e;
+  --color-twilight-indigo-900: #14161f;
+  --color-twilight-indigo-950: #0e0f16;
+
+  --color-powder-blue-50: #ebf0fa;
+  --color-powder-blue-100: #d6e2f5;
+  --color-powder-blue-200: #adc5eb;
+  --color-powder-blue-300: #85a8e0;
+  --color-powder-blue-400: #5c8bd6;
+  --color-powder-blue-500: #336ecc;
+  --color-powder-blue-600: #2958a3;
+  --color-powder-blue-700: #1f427a;
+  --color-powder-blue-800: #142c52;
+  --color-powder-blue-900: #0a1629;
+  --color-powder-blue-950: #070f1d;
+
+  --color-powder-petal-50: #fcf1e8;
+  --color-powder-petal-100: #fae3d1;
+  --color-powder-petal-200: #f5c7a3;
+  --color-powder-petal-300: #f0aa75;
+  --color-powder-petal-400: #eb8e47;
+  --color-powder-petal-500: #e67219;
+  --color-powder-petal-600: #b85b14;
+  --color-powder-petal-700: #8a440f;
+  --color-powder-petal-800: #5c2e0a;
+  --color-powder-petal-900: #2e1705;
+  --color-powder-petal-950: #201004;
+
+  --color-powder-blush-50: #faedea;
+  --color-powder-blush-100: #f5dbd6;
+  --color-powder-blush-200: #ebb7ad;
+  --color-powder-blush-300: #e19384;
+  --color-powder-blush-400: #d7705b;
+  --color-powder-blush-500: #cd4c32;
+  --color-powder-blush-600: #a43d28;
+  --color-powder-blush-700: #7b2d1e;
+  --color-powder-blush-800: #521e14;
+  --color-powder-blush-900: #290f0a;
+  --color-powder-blush-950: #1d0b07;
+
+  --color-ash-brown-50: #f5f1f0;
+  --color-ash-brown-100: #ebe4e0;
+  --color-ash-brown-200: #d7c8c1;
+  --color-ash-brown-300: #c3ada2;
+  --color-ash-brown-400: #ae9284;
+  --color-ash-brown-500: #9a7765;
+  --color-ash-brown-600: #7b5f51;
+  --color-ash-brown-700: #5d473c;
+  --color-ash-brown-800: #3e2f28;
+  --color-ash-brown-900: #1f1814;
+  --color-ash-brown-950: #16110e;
 }
 
 :root {
@@ -14,18 +76,6 @@
 
 @layer base {
   body {
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      'Open Sans',
-      'Helvetica Neue',
-      sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -33,6 +83,12 @@
 
   body > main {
     margin: 0 1rem 1rem 1rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
   }
 
   h1 {

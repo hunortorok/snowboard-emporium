@@ -1,3 +1,7 @@
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import interFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import groteskFont from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -31,6 +35,20 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
 
 export function links() {
   return [
+    {
+      rel: 'preload',
+      as: 'font',
+      type: 'font/woff2',
+      href: interFont,
+      crossOrigin: 'anonymous',
+    },
+    {
+      rel: 'preload',
+      as: 'font',
+      type: 'font/woff2',
+      href: groteskFont,
+      crossOrigin: 'anonymous',
+    },
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',

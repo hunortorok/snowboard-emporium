@@ -10,7 +10,7 @@ export function Header({header, cart, publicStoreDomain}) {
   return (
     <header className="flex items-center bg-white h-16 px-4 sticky top-0 z-[1]">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+        <strong className="font-heading">{shop.name}</strong>
       </NavLink>
       <HeaderMenu
         menu={menu}
