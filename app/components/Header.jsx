@@ -3,6 +3,7 @@ import {Await, NavLink, useAsyncValue} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {useUIStore} from '~/stores/ui.store';
+import {useWishlistStore} from '~/stores/wishlist.store';
 
 export function Header({header, cart, publicStoreDomain}) {
   const {shop, menu} = header;
@@ -76,8 +77,20 @@ function HeaderCtas({cart}) {
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
+      <WishlistBadge />
       <CartToggle cart={cart} />
     </nav>
+  );
+}
+
+function WishlistBadge() {
+  const count = useWishlistStore((s) => s.items.length);
+  const hasHydrated = useWishlistStore((s) => s.hasHydrated);
+
+  return (
+    <NavLink prefetch="intent" to="/wishlist" style={activeLinkStyle}>
+      Wishlist {hasHydrated ? count : <span>&nbsp;</span>}
+    </NavLink>
   );
 }
 

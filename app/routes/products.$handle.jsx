@@ -10,6 +10,7 @@ import {
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import {WishlistButton} from '~/components/WishlistButton';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta = ({data}) => {
@@ -88,11 +89,24 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
+  const wishlistSnapshot = {
+    id: product.id,
+    handle: product.handle,
+    title: product.title,
+    featuredImage: selectedVariant?.image,
+    priceRange: {
+      minVariantPrice: selectedVariant?.price,
+    },
+  };
+
   return (
     <div className="product">
       <ProductImage image={selectedVariant?.image} />
       <div className="product-main">
-        <h1>{title}</h1>
+        <div className="product-title-row">
+          <h1>{title}</h1>
+          <WishlistButton product={wishlistSnapshot} />
+        </div>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
