@@ -1,7 +1,8 @@
 import {defineConfig} from 'vite';
 import {hydrogen} from '@shopify/hydrogen/vite';
-import {oxygen} from '@shopify/mini-oxygen/vite';
 import {reactRouter} from '@react-router/dev/vite';
+import netlify from '@netlify/vite-plugin';
+import netlifyReactRouter from '@netlify/vite-plugin-react-router';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -9,8 +10,9 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     hydrogen(),
-    oxygen(),
     reactRouter(),
+    netlifyReactRouter({edge: true}),
+    netlify(),
     tsconfigPaths(),
   ],
   build: {
@@ -32,8 +34,5 @@ export default defineConfig({
        */
       include: ['set-cookie-parser', 'cookie', 'react-router'],
     },
-  },
-  server: {
-    allowedHosts: ['.tryhydrogen.dev'],
   },
 });
