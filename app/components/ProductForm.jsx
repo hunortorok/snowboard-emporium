@@ -6,15 +6,14 @@ export function ProductForm({productOptions, selectedVariant}) {
   const navigate = useNavigate();
   const openCart = useUIStore((s) => s.openCart);
   return (
-    <div className="product-form">
+    <div>
       {productOptions.map((option) => {
-        // If there is only a single value in the option values, don't display the option
         if (option.optionValues.length === 1) return null;
 
         return (
-          <div className="product-options" key={option.name}>
+          <div key={option.name}>
             <h5>{option.name}</h5>
-            <div className="product-options-grid">
+            <div className="flex flex-wrap gap-3">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -27,14 +26,12 @@ export function ProductForm({productOptions, selectedVariant}) {
                   swatch,
                 } = value;
 
+                const itemClass = `px-2 py-1 bg-transparent text-base font-[inherit]${exists && !selected ? ' link' : ''}`;
+
                 if (isDifferentProduct) {
-                  // SEO
-                  // When the variant is a combined listing child product
-                  // that leads to a different url, we need to render it
-                  // as an anchor tag
                   return (
                     <Link
-                      className="product-options-item"
+                      className={itemClass}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
@@ -51,15 +48,10 @@ export function ProductForm({productOptions, selectedVariant}) {
                     </Link>
                   );
                 } else {
-                  // SEO
-                  // When the variant is an update to the search param,
-                  // render it as a button with javascript navigating to
-                  // the variant so that SEO bots do not index these as
-                  // duplicated links
                   return (
                     <button
                       type="button"
-                      className={`product-options-item${exists && !selected ? ' link' : ''}`}
+                      className={itemClass}
                       key={option.name + name}
                       style={{
                         border: selected
@@ -119,12 +111,12 @@ function ProductOptionSwatch({swatch, name}) {
   return (
     <div
       aria-label={name}
-      className="product-option-label-swatch"
+      className="w-5 h-5 my-1"
       style={{
         backgroundColor: color || 'transparent',
       }}
     >
-      {!!image && <img src={image} alt={name} />}
+      {!!image && <img src={image} alt={name} className="w-full" />}
     </div>
   );
 }

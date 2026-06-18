@@ -3,12 +3,8 @@ import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
@@ -21,26 +17,24 @@ async function loadCriticalData({context, request}) {
     context.storefront.query(COLLECTIONS_QUERY, {
       variables: paginationVariables,
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
 
   return {collections};
 }
 
-function loadDeferredData({context}) {
+function loadDeferredData() {
   return {};
 }
 
 export default function Collections() {
-
   const {collections} = useLoaderData();
 
   return (
-    <div className="collections">
+    <div>
       <h1>Collections</h1>
       <PaginatedResourceSection
         connection={collections}
-        resourcesClassName="collections-grid"
+        resourcesClassName="grid gap-6 grid-cols-[repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
       >
         {({node: collection, index}) => (
           <CollectionItem
@@ -57,7 +51,6 @@ export default function Collections() {
 function CollectionItem({collection, index}) {
   return (
     <Link
-      className="collection-item"
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
@@ -69,6 +62,7 @@ function CollectionItem({collection, index}) {
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}
           sizes="(min-width: 45em) 400px, 100vw"
+          className="h-auto"
         />
       )}
       <h5>{collection.title}</h5>

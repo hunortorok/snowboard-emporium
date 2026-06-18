@@ -16,7 +16,7 @@ export function ProductItem({product, loading}) {
   };
 
   return (
-    <div className="product-item">
+    <div className="relative">
       <Link prefetch="intent" to={variantUrl}>
         {image && (
           <Image
@@ -25,6 +25,7 @@ export function ProductItem({product, loading}) {
             data={image}
             loading={loading}
             sizes="(min-width: 45em) 400px, 100vw"
+            className="h-auto w-full"
           />
         )}
         <h4>{product.title}</h4>

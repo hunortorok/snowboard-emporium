@@ -6,7 +6,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="footer">
+          <footer className="bg-dark mt-auto">
             {footer?.menu && header.shop.primaryDomain?.url && (
               <FooterMenu
                 menu={footer.menu}
@@ -23,10 +23,9 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
 
 function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
-    <nav className="footer-menu" role="navigation">
+    <nav className="flex justify-center flex-wrap gap-4 p-4" role="navigation">
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
-        // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
           item.url.includes(publicStoreDomain) ||
@@ -35,7 +34,13 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
             : item.url;
         const isExternal = !url.startsWith('/');
         return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
+          <a
+            href={url}
+            key={item.id}
+            rel="noopener noreferrer"
+            target="_blank"
+            className="text-white min-w-fit"
+          >
             {item.title}
           </a>
         ) : (
@@ -45,6 +50,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
             prefetch="intent"
             style={activeLinkStyle}
             to={url}
+            className="min-w-fit"
           >
             {item.title}
           </NavLink>

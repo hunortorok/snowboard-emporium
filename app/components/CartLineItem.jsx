@@ -13,8 +13,8 @@ export function CartLineItem({layout, line, childrenMap}) {
   const childrenLabelId = `cart-line-children-${id}`;
 
   return (
-    <li key={id} className="cart-line">
-      <div className="cart-line-inner">
+    <li key={id} className="py-3">
+      <div className="flex">
         {image && (
           <Image
             alt={title}
@@ -23,6 +23,7 @@ export function CartLineItem({layout, line, childrenMap}) {
             height={100}
             loading="lazy"
             width={100}
+            className="h-full block mr-3"
           />
         )}
 
@@ -59,7 +60,7 @@ export function CartLineItem({layout, line, childrenMap}) {
           <p id={childrenLabelId} className="sr-only">
             Line items with {product.title}
           </p>
-          <ul aria-labelledby={childrenLabelId} className="cart-line-children">
+          <ul aria-labelledby={childrenLabelId} className="pl-8">
             {lineItemChildren.map((childLine) => (
               <CartLineItem
                 childrenMap={childrenMap}
@@ -82,7 +83,7 @@ function CartLineQuantity({line}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantity">
+    <div className="flex">
       <small>Quantity: {quantity} &nbsp;&nbsp;</small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button

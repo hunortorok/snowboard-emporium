@@ -8,7 +8,7 @@ import {useWishlistStore} from '~/stores/wishlist.store';
 export function Header({header, cart, publicStoreDomain}) {
   const {shop, menu} = header;
   return (
-    <header className="header">
+    <header className="flex items-center bg-white h-16 px-4 sticky top-0 z-[1]">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
         <strong>{shop.name}</strong>
       </NavLink>
@@ -29,11 +29,15 @@ export function HeaderMenu({
   viewport,
   publicStoreDomain,
 }) {
-  const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
+  const navClassName =
+    viewport === 'desktop'
+      ? 'hidden gap-4 ml-12 min-[45em]:flex'
+      : 'flex flex-col gap-4';
+
   return (
-    <nav className={className} role="navigation">
+    <nav className={navClassName} role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
@@ -48,7 +52,6 @@ export function HeaderMenu({
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
-        // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
           item.url.includes(publicStoreDomain) ||
@@ -57,7 +60,7 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
+            className="cursor-pointer"
             end
             key={item.id}
             onClick={close}
@@ -75,7 +78,7 @@ export function HeaderMenu({
 
 function HeaderCtas({cart}) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <nav className="flex items-center gap-4 ml-auto [&>*]:min-w-fit" role="navigation">
       <HeaderMenuMobileToggle />
       <WishlistBadge />
       <CartToggle cart={cart} />
@@ -98,7 +101,7 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      className="reset min-[48em]:hidden"
       onClick={() => open('mobile')}
     >
       <h3>☰</h3>

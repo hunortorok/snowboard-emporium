@@ -9,12 +9,8 @@ export const meta = ({data}) => {
 };
 
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
@@ -32,7 +28,6 @@ async function loadCriticalData({context, params, request}) {
   const [{collection}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
       variables: {handle, ...paginationVariables},
-      // Add other queries here, so that they are loaded in parallel
     }),
   ]);
 
@@ -42,7 +37,6 @@ async function loadCriticalData({context, params, request}) {
     });
   }
 
-  // The API handle might be localized, so redirect to the localized handle
   redirectIfHandleIsLocalized(request, {handle, data: collection});
 
   return {
@@ -50,21 +44,22 @@ async function loadCriticalData({context, params, request}) {
   };
 }
 
-function loadDeferredData({context}) {
+function loadDeferredData() {
   return {};
 }
 
 export default function Collection() {
-
   const {collection} = useLoaderData();
 
   return (
-    <div className="collection">
+    <div>
       <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
+      <p className="mb-4 max-w-[95%] min-[45em]:max-w-[600px]">
+        {collection.description}
+      </p>
       <PaginatedResourceSection
         connection={collection.products}
-        resourcesClassName="products-grid"
+        resourcesClassName="grid gap-6 grid-cols-[repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
       >
         {({node: product, index}) => (
           <ProductItem
@@ -113,7 +108,6 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
   }
 `;
 
-// NOTE: https://shopify.dev/docs/api/storefront/2022-04/objects/collection
 const COLLECTION_QUERY = `#graphql
   ${PRODUCT_ITEM_FRAGMENT}
   query Collection(

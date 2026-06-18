@@ -24,29 +24,29 @@ function getLineItemChildrenMap(lines) {
 }
 
 export function CartMain({layout, cart: originalCart}) {
-  // The useOptimisticCart hook applies pending actions to the cart
-  // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
 
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&
     Boolean(cart?.discountCodes?.filter((code) => code.applicable)?.length);
-  const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
   const cartHasItems = cart?.totalQuantity ? cart.totalQuantity > 0 : false;
   const childrenMap = getLineItemChildrenMap(cart?.lines?.nodes ?? []);
 
+  const mainClassName = withDiscount
+    ? 'h-full max-h-[calc(100vh-var(--cart-aside-summary-height-with-discount))] overflow-y-auto w-auto'
+    : 'h-full max-h-[calc(100vh-var(--cart-aside-summary-height))] overflow-y-auto w-auto';
+
   return (
-    <div className={className}>
+    <div className={mainClassName}>
       <CartEmpty hidden={linesCount} layout={layout} />
-      <div className="cart-details">
+      <div>
         <p id="cart-lines" className="sr-only">
           Line items
         </p>
         <div>
           <ul aria-labelledby="cart-lines">
             {(cart?.lines?.nodes ?? []).map((line) => {
-              // we do not render non-parent lines at the root of the cart
               if (
                 'parentRelationship' in line &&
                 line.parentRelationship?.parent

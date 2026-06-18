@@ -9,19 +9,14 @@ export const meta = () => {
 };
 
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
 async function loadCriticalData({context}) {
   const [{collections}] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
-    // Add other queries here, so that they are loaded in parallel
   ]);
 
   return {
@@ -34,7 +29,6 @@ function loadDeferredData({context}) {
   const recommendedProducts = context.storefront
     .query(RECOMMENDED_PRODUCTS_QUERY)
     .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
       console.error(error);
       return null;
     });
@@ -45,10 +39,9 @@ function loadDeferredData({context}) {
 }
 
 export default function Homepage() {
-
   const data = useLoaderData();
   return (
-    <div className="home">
+    <div>
       {data.isShopLinked ? null : <MockShopNotice />}
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
@@ -61,12 +54,16 @@ function FeaturedCollection({collection}) {
   const image = collection?.image;
   return (
     <Link
-      className="featured-collection"
+      className="block mb-8 relative"
       to={`/collections/${collection.handle}`}
     >
       {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
+        <div className="aspect-square min-[45em]:aspect-video">
+          <Image
+            data={image}
+            sizes="100vw"
+            className="h-auto max-h-full object-cover"
+          />
         </div>
       )}
       <h1>{collection.title}</h1>
@@ -76,12 +73,12 @@ function FeaturedCollection({collection}) {
 
 function RecommendedProducts({products}) {
   return (
-    <div className="recommended-products">
+    <div>
       <h2>Recommended Products</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="recommended-products-grid">
+            <div className="grid gap-6 grid-cols-2 min-[45em]:grid-cols-4">
               {response
                 ? response.products.nodes.map((product) => (
                     <ProductItem key={product.id} product={product} />

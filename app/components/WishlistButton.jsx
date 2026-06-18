@@ -1,17 +1,27 @@
 import {useWishlistStore} from '~/stores/wishlist.store';
 
-export function WishlistButton({product}) {
+export function WishlistButton({product, variant = 'card'}) {
   const toggle = useWishlistStore((s) => s.toggle);
   const hasHydrated = useWishlistStore((s) => s.hasHydrated);
   const wishlisted = useWishlistStore((s) => s.isWishlisted(product.id));
 
   const active = hasHydrated && wishlisted;
 
+  const baseClass =
+    'flex items-center justify-center w-8 h-8 border-none rounded-full cursor-pointer p-[0.3rem] transition-[background,transform] duration-150 hover:scale-110';
+
+  const cardClass =
+    'absolute top-2 right-2 bg-white/85 backdrop-blur-sm hover:bg-white';
+
+  const inlineClass = 'static shrink-0 mt-1 bg-white/85 hover:bg-white';
+
+  const svgFill = active ? 'fill-[#e63946]' : 'fill-[#555]';
+
   return (
     <button
       aria-label={active ? 'Remove from wishlist' : 'Add to wishlist'}
       aria-pressed={active}
-      className={`wishlist-button${active ? ' wishlist-button--active' : ''}`}
+      className={`${baseClass} ${variant === 'card' ? cardClass : inlineClass} [&_svg]:w-[1.1rem] [&_svg]:h-[1.1rem] [&_svg]:${svgFill}`}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

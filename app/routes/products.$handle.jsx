@@ -24,12 +24,8 @@ export const meta = ({data}) => {
 };
 
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
@@ -45,14 +41,12 @@ async function loadCriticalData({context, params, request}) {
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
 
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
 
-  // The API handle might be localized, so redirect to the localized handle
   redirectIfHandleIsLocalized(request, {handle, data: product});
 
   return {
@@ -60,28 +54,20 @@ async function loadCriticalData({context, params, request}) {
   };
 }
 
-function loadDeferredData({context, params}) {
-  // Put any API calls that is not critical to be available on first page render
-  // For example: product reviews, product recommendations, social feeds.
-
+function loadDeferredData() {
   return {};
 }
 
 export default function Product() {
-
   const {product} = useLoaderData();
 
-  // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
     product.selectedOrFirstAvailableVariant,
     getAdjacentAndFirstAvailableVariants(product),
   );
 
-  // Sets the search param to the selected variant without navigation
-  // only when no search params are set in the url
   useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
 
-  // Get the product options array
   const productOptions = getProductOptions({
     ...product,
     selectedOrFirstAvailableVariant: selectedVariant,
@@ -100,12 +86,12 @@ export default function Product() {
   };
 
   return (
-    <div className="product">
+    <div className="grid min-[45em]:grid-cols-2 min-[45em]:gap-16">
       <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <div className="product-title-row">
-          <h1>{title}</h1>
-          <WishlistButton product={wishlistSnapshot} />
+      <div className="self-start sticky top-24">
+        <div className="flex items-start gap-3">
+          <h1 className="flex-1 mt-0">{title}</h1>
+          <WishlistButton product={wishlistSnapshot} variant="inline" />
         </div>
         <ProductPrice
           price={selectedVariant?.price}
