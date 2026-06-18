@@ -54,7 +54,7 @@ export default function Collection() {
   return (
     <div>
       <h1>{collection.title}</h1>
-      <p className="mb-4 max-w-[95%] min-[45em]:max-w-[600px]">
+      <p className="mb-4 max-w-[95%] min-[45em]:max-w-150">
         {collection.description}
       </p>
       <PaginatedResourceSection
