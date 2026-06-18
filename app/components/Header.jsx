@@ -5,30 +5,28 @@ import {useAside} from '~/components/Aside';
 import {useUIStore} from '~/stores/ui.store';
 import {useWishlistStore} from '~/stores/wishlist.store';
 
-export function Header({header, cart, publicStoreDomain}) {
-  const {shop, menu} = header;
+const NAV_ITEMS = [
+  {title: 'Products', url: '/collections/all'},
+  {title: 'Collections', url: '/collections'},
+];
+
+export function Header({header, cart}) {
+  const {shop} = header;
   return (
-    <header className="flex items-center bg-white h-16 px-4 sticky top-0 z-[1]">
+    <header className="flex items-center bg-powder-blue-200 h-16 px-4 sticky top-0 z-[1]">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong className="font-heading">{shop.name}</strong>
+        <span className="flex items-center gap-2">
+          <SnowflakeIcon />
+          <strong className="font-heading">{shop.name}</strong>
+        </span>
       </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
+      <HeaderMenu viewport="desktop" />
       <HeaderCtas cart={cart} />
     </header>
   );
 }
 
-export function HeaderMenu({
-  menu,
-  primaryDomainUrl,
-  viewport,
-  publicStoreDomain,
-}) {
+export function HeaderMenu({viewport}) {
   const {close} = useAside();
 
   const navClassName =
@@ -38,40 +36,19 @@ export function HeaderMenu({
 
   return (
     <nav className={navClassName} role="navigation">
-      {viewport === 'mobile' && (
+      {NAV_ITEMS.map((item) => (
         <NavLink
+          className="cursor-pointer"
           end
+          key={item.url}
           onClick={close}
           prefetch="intent"
           style={activeLinkStyle}
-          to="/"
+          to={item.url}
         >
-          Home
+          {item.title}
         </NavLink>
-      )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
-
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <NavLink
-            className="cursor-pointer"
-            end
-            key={item.id}
-            onClick={close}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
+      ))}
     </nav>
   );
 }
@@ -91,8 +68,19 @@ function WishlistBadge() {
   const hasHydrated = useWishlistStore((s) => s.hasHydrated);
 
   return (
-    <NavLink prefetch="intent" to="/wishlist" style={activeLinkStyle}>
-      Wishlist {hasHydrated ? count : <span>&nbsp;</span>}
+    <NavLink
+      prefetch="intent"
+      to="/wishlist"
+      style={activeLinkStyle}
+      aria-label="Wishlist"
+      className="relative flex items-center"
+    >
+      <HeartIcon />
+      {hasHydrated && count > 0 && (
+        <span className="absolute -top-1 -right-2 bg-twilight-indigo-700 text-powder-blue-100 text-[10px] font-bold leading-none rounded-full w-4 h-4 flex items-center justify-center">
+          {count}
+        </span>
+      )}
     </NavLink>
   );
 }
@@ -116,6 +104,9 @@ function CartBadge({count}) {
   return (
     <a
       href="/cart"
+      aria-label="Cart"
+      className="relative flex items-center"
+      style={{color: 'var(--color-twilight-indigo-700)'}}
       onClick={(e) => {
         e.preventDefault();
         openCart();
@@ -127,7 +118,12 @@ function CartBadge({count}) {
         });
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <CartIcon />
+      {count !== null && count > 0 && (
+        <span className="absolute -top-1 -right-2 bg-twilight-indigo-700 text-powder-blue-100 text-[10px] font-bold leading-none rounded-full w-4 h-4 flex items-center justify-center">
+          {count}
+        </span>
+      )}
     </a>
   );
 }
@@ -148,24 +144,78 @@ function CartBanner() {
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
 }
 
-const FALLBACK_HEADER_MENU = {
-  id: 'gid://shopify/Menu/199655587896',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461609500728',
-      resourceId: null,
-      tags: [],
-      title: 'Collections',
-      type: 'HTTP',
-      url: '/collections',
-      items: [],
-    },
-  ],
-};
-
 function activeLinkStyle({isActive, isPending}) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
+    color: isPending
+      ? 'var(--color-twilight-indigo-400)'
+      : 'var(--color-twilight-indigo-700)',
   };
+}
+
+function SnowflakeIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="12" y1="2" x2="12" y2="22" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+      <line x1="19.07" y1="4.93" x2="4.93" y2="19.07" />
+      <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+      <polyline points="12 2 10 6 14 6 12 2" />
+      <polyline points="12 22 10 18 14 18 12 22" />
+      <polyline points="2 12 6 10 6 14 2 12" />
+      <polyline points="22 12 18 10 18 14 22 12" />
+    </svg>
+  );
+}
+
+function HeartIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="20" cy="21" r="1" />
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+    </svg>
+  );
 }
