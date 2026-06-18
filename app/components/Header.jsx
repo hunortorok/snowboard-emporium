@@ -14,7 +14,7 @@ export function Header({header, cart}) {
   const {shop} = header;
   return (
     <header className="flex items-center bg-powder-blue-200 h-16 px-4 sticky top-0 z-[1]">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+      <NavLink prefetch="intent" to="/" end>
         <span className="flex items-center gap-2">
           <SnowflakeIcon />
           <strong className="font-heading">{shop.name}</strong>
@@ -38,12 +38,17 @@ export function HeaderMenu({viewport}) {
     <nav className={navClassName} role="navigation">
       {NAV_ITEMS.map((item) => (
         <NavLink
-          className="cursor-pointer"
+          className={({isActive}) =>
+            `cursor-pointer px-2 py-1 rounded border border-twilight-indigo-700 transition-all ${
+              isActive
+                ? 'bg-twilight-indigo-700 text-powder-blue-100'
+                : 'text-twilight-indigo-700'
+            }`
+          }
           end
           key={item.url}
           onClick={close}
           prefetch="intent"
-          style={activeLinkStyle}
           to={item.url}
         >
           {item.title}
@@ -55,7 +60,10 @@ export function HeaderMenu({viewport}) {
 
 function HeaderCtas({cart}) {
   return (
-    <nav className="flex items-center gap-4 ml-auto [&>*]:min-w-fit" role="navigation">
+    <nav
+      className="flex items-center gap-4 ml-auto [&>*]:min-w-fit"
+      role="navigation"
+    >
       <HeaderMenuMobileToggle />
       <WishlistBadge />
       <CartToggle cart={cart} />
@@ -88,10 +96,7 @@ function WishlistBadge() {
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
-    <button
-      className="reset min-[48em]:hidden"
-      onClick={() => open('mobile')}
-    >
+    <button className="reset min-[48em]:hidden" onClick={() => open('mobile')}>
       <h3>☰</h3>
     </button>
   );
