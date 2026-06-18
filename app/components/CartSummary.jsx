@@ -10,10 +10,9 @@ export function CartSummary({cart, layout}) {
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="flex items-center">
-        <dt>Subtotal</dt>
-        <dd>
+      <dl className="flex items-center justify-between py-3 border-t border-ash-brown-200">
+        <dt className="font-heading font-semibold text-sm text-twilight-indigo-900">Subtotal</dt>
+        <dd className="font-heading font-bold text-twilight-indigo-900">
           {cart?.cost?.subtotalAmount?.amount ? (
             <Money data={cart?.cost?.subtotalAmount} />
           ) : (
@@ -32,11 +31,14 @@ function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+    <div className="mt-3">
+      <a
+        href={checkoutUrl}
+        target="_self"
+        className="block w-full bg-twilight-indigo-800 hover:bg-twilight-indigo-900 text-white text-center font-heading font-semibold text-sm tracking-wide py-4 rounded-lg transition-colors hover:no-underline"
+      >
+        Continue to Checkout &rarr;
       </a>
-      <br />
     </div>
   );
 }

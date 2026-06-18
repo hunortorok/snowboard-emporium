@@ -1,6 +1,7 @@
 import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {ImagePlaceholder} from '~/components/ImagePlaceholder';
 
 export async function loader(args) {
   const deferredData = loadDeferredData(args);
@@ -34,7 +35,7 @@ export default function Collections() {
       <h1>Collections</h1>
       <PaginatedResourceSection
         connection={collections}
-        resourcesClassName="grid gap-6 grid-cols-[repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
+        resourcesClassName="grid gap-4 grid-cols-2 min-[45em]:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] mb-8"
       >
         {({node: collection, index}) => (
           <CollectionItem
@@ -54,18 +55,29 @@ function CollectionItem({collection, index}) {
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
+      className="group relative rounded-xl overflow-hidden hover:no-underline"
     >
-      {collection?.image && (
-        <Image
-          alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
-          data={collection.image}
-          loading={index < 3 ? 'eager' : undefined}
-          sizes="(min-width: 45em) 400px, 100vw"
-          className="h-auto"
-        />
-      )}
-      <h5>{collection.title}</h5>
+      <div className="aspect-square">
+        {collection?.image ? (
+          <Image
+            alt={collection.image.altText || collection.title}
+            aspectRatio="1/1"
+            data={collection.image}
+            loading={index < 3 ? 'eager' : undefined}
+            sizes="(min-width: 45em) 400px, 100vw"
+            className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <ImagePlaceholder
+            label={`${collection.title} — collection image`}
+          />
+        )}
+      </div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/65 via-black/10 to-transparent flex items-end p-5">
+        <h5 className="font-heading font-bold text-white text-xl m-0 group-hover:translate-y-[-2px] transition-transform duration-200">
+          {collection.title}
+        </h5>
+      </div>
     </Link>
   );
 }

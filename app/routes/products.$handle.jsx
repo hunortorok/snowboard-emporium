@@ -86,30 +86,40 @@ export default function Product() {
   };
 
   return (
-    <div className="grid min-[45em]:grid-cols-2 min-[45em]:gap-16">
+    <div className="grid min-[45em]:grid-cols-2 min-[45em]:gap-16 py-4">
       <ProductImage image={selectedVariant?.image} />
-      <div className="self-start sticky top-24">
-        <div className="flex items-start gap-3">
-          <h1 className="flex-1 mt-0">{title}</h1>
-          <WishlistButton product={wishlistSnapshot} variant="inline" />
+      <div className="self-start sticky top-24 flex flex-col gap-6 mt-6 min-[45em]:mt-0">
+        <div>
+          <div className="flex items-start gap-3 mb-1">
+            <h1 className="flex-1 mt-0 mb-0">{title}</h1>
+            <WishlistButton product={wishlistSnapshot} variant="inline" />
+          </div>
+          {product.vendor && (
+            <p className="text-sm text-twilight-indigo-400 font-medium m-0">
+              {product.vendor}
+            </p>
+          )}
         </div>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
+          size="large"
         />
-        <br />
         <ProductForm
           productOptions={productOptions}
           selectedVariant={selectedVariant}
         />
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
+        {descriptionHtml && (
+          <div>
+            <p className="text-xs font-heading font-semibold uppercase tracking-widest text-twilight-indigo-500 mb-3 mt-0">
+              Description
+            </p>
+            <div
+              className="text-sm text-twilight-indigo-800 leading-relaxed"
+              dangerouslySetInnerHTML={{__html: descriptionHtml}}
+            />
+          </div>
+        )}
       </div>
       <Analytics.ProductView
         data={{

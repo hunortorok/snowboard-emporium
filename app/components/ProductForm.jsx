@@ -12,8 +12,10 @@ export function ProductForm({productOptions, selectedVariant}) {
 
         return (
           <div key={option.name}>
-            <h5>{option.name}</h5>
-            <div className="flex flex-wrap gap-3">
+            <p className="text-xs font-heading font-semibold uppercase tracking-widest text-twilight-indigo-500 mb-2 mt-0">
+              {option.name}
+            </p>
+            <div className="flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -26,23 +28,28 @@ export function ProductForm({productOptions, selectedVariant}) {
                   swatch,
                 } = value;
 
-                const itemClass = `px-2 py-1 bg-transparent text-base font-[inherit]${exists && !selected ? ' link' : ''}`;
+                const hasSwatch = swatch?.color || swatch?.image;
+                const pillClass = [
+                  'inline-flex items-center justify-center rounded-md border-2 text-sm font-sans transition-all duration-150',
+                  hasSwatch ? 'p-1' : 'px-4 py-2',
+                  selected
+                    ? 'border-twilight-indigo-800 bg-twilight-indigo-50 text-twilight-indigo-900 font-semibold'
+                    : 'border-ash-brown-200 bg-white text-twilight-indigo-700',
+                  exists && !selected
+                    ? 'hover:border-twilight-indigo-500 cursor-pointer'
+                    : '',
+                  !available ? 'opacity-35 line-through' : '',
+                ].join(' ');
 
                 if (isDifferentProduct) {
                   return (
                     <Link
-                      className={itemClass}
+                      className={`${pillClass} hover:no-underline`}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </Link>
@@ -51,14 +58,8 @@ export function ProductForm({productOptions, selectedVariant}) {
                   return (
                     <button
                       type="button"
-                      className={itemClass}
+                      className={pillClass}
                       key={option.name + name}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
                       disabled={!exists}
                       onClick={() => {
                         if (!selected) {

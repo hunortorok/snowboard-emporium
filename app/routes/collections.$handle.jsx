@@ -53,13 +53,29 @@ export default function Collection() {
 
   return (
     <div>
-      <h1>{collection.title}</h1>
-      <p className="mb-4 max-w-[95%] min-[45em]:max-w-150">
-        {collection.description}
-      </p>
+      <div className="-mx-4 mb-8 relative">
+        <div className="aspect-[21/6]">
+          <img
+            src="/collection-banner.jpg"
+            alt="Snowboarder descending a mountain slope"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-linear-to-r from-twilight-indigo-950/75 via-twilight-indigo-950/30 to-transparent flex flex-col justify-end p-8 min-[45em]:p-12">
+          <h1 className="text-white m-0">{collection.title}</h1>
+          {collection.description && (
+            <p className="text-powder-blue-100 max-w-lg mt-2 mb-0 text-sm leading-relaxed">
+              {collection.description}
+            </p>
+          )}
+        </div>
+        <p className="absolute bottom-2 right-3 text-[10px] text-white/35 m-0 pointer-events-none">
+          Benjamin Hayward / Unsplash
+        </p>
+      </div>
       <PaginatedResourceSection
         connection={collection.products}
-        resourcesClassName="grid gap-6 grid-cols-[repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
+        resourcesClassName="grid gap-4 grid-cols-2 min-[45em]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] mb-8"
       >
         {({node: product, index}) => (
           <ProductItem
