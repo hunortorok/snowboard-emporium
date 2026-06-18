@@ -6,7 +6,6 @@ import {Header, HeaderMenu} from '~/components/Header';
 export function PageLayout({
   cart,
   children = null,
-  footer,
   header,
   publicStoreDomain,
 }) {
@@ -22,11 +21,7 @@ export function PageLayout({
         />
       )}
       <main>{children}</main>
-      <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      />
+      <Footer />
     </Aside.Provider>
   );
 }

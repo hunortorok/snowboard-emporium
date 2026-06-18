@@ -1,110 +1,87 @@
-import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
-
-export function Footer({footer: footerPromise, header, publicStoreDomain}) {
+export function Footer() {
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="bg-dark mt-auto">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
-        )}
-      </Await>
-    </Suspense>
+    <footer className="bg-twilight-indigo-700 text-powder-blue-100 mt-auto">
+      <div className="max-w-6xl mx-auto px-6 pt-12 pb-8">
+        <div className="mb-10">
+          <p className="font-heading text-xl font-bold text-white">
+            Snowboard Emporium
+          </p>
+          <p className="mt-1 text-sm text-powder-blue-200">
+            Premium snowboards and gear built for every descent.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 min-[48em]:grid-cols-4 mb-10">
+          <FooterColumn heading="Shop">
+            <FooterLink>Snowboards</FooterLink>
+            <FooterLink>Bindings</FooterLink>
+            <FooterLink>Boots</FooterLink>
+            <FooterLink>Apparel</FooterLink>
+            <FooterLink>New Arrivals</FooterLink>
+          </FooterColumn>
+
+          <FooterColumn heading="Support">
+            <FooterLink>Contact Us</FooterLink>
+            <FooterLink>Shipping &amp; Returns</FooterLink>
+            <FooterLink>Size Guide</FooterLink>
+            <FooterLink>FAQ</FooterLink>
+            <FooterLink>Track Order</FooterLink>
+          </FooterColumn>
+
+          <FooterColumn heading="Company">
+            <FooterLink>About Us</FooterLink>
+            <FooterLink>Careers</FooterLink>
+            <FooterLink>Sustainability</FooterLink>
+            <FooterLink>Stores</FooterLink>
+          </FooterColumn>
+
+          <FooterColumn heading="Legal">
+            <FooterLink>Privacy Policy</FooterLink>
+            <FooterLink>Refund Policy</FooterLink>
+            <FooterLink>Shipping Policy</FooterLink>
+            <FooterLink>Terms of Service</FooterLink>
+          </FooterColumn>
+        </div>
+
+        <div className="border-t border-twilight-indigo-600 pt-4 pb-6 mb-2">
+          <p className="text-xs text-twilight-indigo-400 italic">
+            This is a mock ecommerce site for demonstration purposes only. No real products, transactions, or services are offered.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-4 min-[48em]:flex-row min-[48em]:justify-between min-[48em]:items-center">
+          <p className="text-sm text-powder-blue-200">
+            &copy; 2026 Snowboard Emporium. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <FooterLink>Instagram</FooterLink>
+            <FooterLink>YouTube</FooterLink>
+            <FooterLink>TikTok</FooterLink>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }
 
-function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
+function FooterColumn({heading, children}) {
   return (
-    <nav className="flex justify-center flex-wrap gap-4 p-4" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a
-            href={url}
-            key={item.id}
-            rel="noopener noreferrer"
-            target="_blank"
-            className="text-white min-w-fit"
-          >
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-            className="min-w-fit"
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
+    <div>
+      <p className="font-heading font-semibold text-white mb-3">{heading}</p>
+      <ul className="space-y-2">{children}</ul>
+    </div>
   );
 }
 
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
-};
-
-function activeLinkStyle({isActive, isPending}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'white',
-  };
+function FooterLink({children}) {
+  return (
+    <li>
+      <a
+        href="/"
+        className="text-sm text-powder-blue-200 hover:text-white hover:underline transition-colors"
+      >
+        {children}
+      </a>
+    </li>
+  );
 }
