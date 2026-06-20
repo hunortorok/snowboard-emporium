@@ -74,7 +74,7 @@ Tokens come from the **Headless** channel in Shopify admin.
 
 **Development:**
 
-\`\`\`bash
+```bash
 npm run dev      # local dev
 npm run build    # production build
-\`\`\`
+```
