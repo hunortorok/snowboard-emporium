@@ -13,15 +13,23 @@ const NAV_ITEMS = [
 export function Header({header, cart}) {
   const {shop} = header;
   return (
-    <header className="flex items-center bg-powder-blue-200 h-16 px-4 sticky top-0 z-[1]">
-      <NavLink prefetch="intent" to="/" end>
-        <span className="flex items-center gap-2">
-          <SnowflakeIcon />
-          <strong className="font-heading">{shop.name}</strong>
-        </span>
-      </NavLink>
+    <header className="flex items-center bg-twilight-indigo-700 border-b-2 border-powder-petal-500 h-16 px-4 min-[45em]:px-32 sticky top-0 z-[1]">
+      <div className="flex-1">
+        <NavLink prefetch="intent" to="/" end className="hover:no-underline">
+          <span className="flex items-center gap-2">
+            <span className="text-powder-petal-500">
+              <SnowflakeIcon />
+            </span>
+            <strong className="font-heading text-powder-blue-200">
+              {shop.name}
+            </strong>
+          </span>
+        </NavLink>
+      </div>
       <HeaderMenu viewport="desktop" />
-      <HeaderCtas cart={cart} />
+      <div className="flex-1 flex justify-end">
+        <HeaderCtas cart={cart} />
+      </div>
     </header>
   );
 }
@@ -31,20 +39,23 @@ export function HeaderMenu({viewport}) {
 
   const navClassName =
     viewport === 'desktop'
-      ? 'hidden gap-4 ml-12 min-[45em]:flex'
-      : 'flex flex-col gap-4';
+      ? 'hidden gap-6 min-[45em]:flex'
+      : 'flex flex-col gap-4 items-center';
 
   return (
     <nav className={navClassName} role="navigation">
       {NAV_ITEMS.map((item) => (
         <NavLink
           className={({isActive}) =>
-            `cursor-pointer px-2 py-1 rounded border border-twilight-indigo-700 transition-all ${
+            `cursor-pointer px-2 py-1 inline-flex flex-col items-center border-b-2 no-underline hover:no-underline after:block after:h-0 after:overflow-hidden after:invisible after:font-bold after:content-[attr(data-title)] transition-colors ${
+              viewport === 'desktop' ? 'text-powder-blue-100' : 'text-twilight-indigo-700'
+            } ${
               isActive
-                ? 'bg-twilight-indigo-700 text-powder-blue-100'
-                : 'text-twilight-indigo-700'
+                ? 'border-powder-petal-500 font-bold'
+                : 'border-transparent hover:font-bold'
             }`
           }
+          data-title={item.title}
           end
           key={item.url}
           onClick={close}
@@ -61,7 +72,7 @@ export function HeaderMenu({viewport}) {
 function HeaderCtas({cart}) {
   return (
     <nav
-      className="flex items-center gap-4 ml-auto [&>*]:min-w-fit"
+      className="flex items-center gap-4 [&>*]:min-w-fit"
       role="navigation"
     >
       <HeaderMenuMobileToggle />
@@ -79,9 +90,8 @@ function WishlistBadge() {
     <NavLink
       prefetch="intent"
       to="/wishlist"
-      style={activeLinkStyle}
       aria-label="Wishlist"
-      className="relative flex items-center"
+      className="relative flex items-center text-powder-blue-100"
     >
       <HeartIcon />
       {hasHydrated && count > 0 && (
@@ -96,8 +106,12 @@ function WishlistBadge() {
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
-    <button className="reset min-[48em]:hidden" onClick={() => open('mobile')}>
-      <h3>☰</h3>
+    <button className="reset min-[48em]:hidden text-powder-blue-100" onClick={() => open('mobile')}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
     </button>
   );
 }
@@ -110,8 +124,7 @@ function CartBadge({count}) {
     <a
       href="/cart"
       aria-label="Cart"
-      className="relative flex items-center"
-      style={{color: 'var(--color-twilight-indigo-700)'}}
+      className="relative flex items-center gap-2 bg-powder-petal-500 text-white px-3 py-1.5 rounded-full text-sm font-medium hover:no-underline hover:bg-powder-petal-400 transition-colors"
       onClick={(e) => {
         e.preventDefault();
         openCart();
@@ -124,8 +137,9 @@ function CartBadge({count}) {
       }}
     >
       <CartIcon />
+      <span>Cart</span>
       {count !== null && count > 0 && (
-        <span className="absolute -top-1 -right-2 bg-twilight-indigo-700 text-powder-blue-100 text-[10px] font-bold leading-none rounded-full w-4 h-4 flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-twilight-indigo-900 text-powder-blue-100 text-[10px] font-bold leading-none rounded-full w-4 h-4 flex items-center justify-center">
           {count}
         </span>
       )}
@@ -147,15 +161,6 @@ function CartBanner() {
   const originalCart = useAsyncValue();
   const cart = useOptimisticCart(originalCart);
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
-}
-
-function activeLinkStyle({isActive, isPending}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending
-      ? 'var(--color-twilight-indigo-400)'
-      : 'var(--color-twilight-indigo-700)',
-  };
 }
 
 function SnowflakeIcon() {

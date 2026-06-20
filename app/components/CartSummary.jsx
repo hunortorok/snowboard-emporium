@@ -6,7 +6,7 @@ export function CartSummary({cart, layout}) {
   const className =
     layout === 'page'
       ? 'relative'
-      : 'bg-white border-t border-dark bottom-0 pt-3 absolute w-[calc(var(--aside-width)-40px)]';
+      : 'bg-powder-blue-50 border-t border-dark bottom-0 pt-3 mb-4 absolute w-[calc(var(--aside-width)-40px)]';
 
   return (
     <div aria-labelledby="cart-summary" className={className}>

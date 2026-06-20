@@ -3,12 +3,7 @@ import {CartDrawer} from '~/components/CartDrawer';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
 
-export function PageLayout({
-  cart,
-  children = null,
-  header,
-  publicStoreDomain,
-}) {
+export function PageLayout({cart, children = null, header, publicStoreDomain}) {
   return (
     <Aside.Provider>
       <CartDrawer cart={cart} />
@@ -30,7 +25,7 @@ function MobileMenuAside({header, publicStoreDomain}) {
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
+      <Aside className="bg-powder-blue-50" type="mobile" heading="MENU">
         <HeaderMenu
           menu={header.menu}
           viewport="mobile"

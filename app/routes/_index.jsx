@@ -5,7 +5,6 @@ import {ProductItem} from '~/components/ProductItem';
 import {MockShopNotice} from '~/components/MockShopNotice';
 import {Hero} from '~/components/Hero';
 
-
 export const meta = () => {
   return [{title: 'Snowboard Emporium'}];
 };
@@ -75,21 +74,24 @@ const CATEGORIES = [
     url: '/collections/all',
     img: '/snowboard-boots.jpg',
     alt: 'Snowboard boots in the snow',
-    credit: null,
+    credit: {name: 'Michael Ditmar'},
   },
   {
     label: 'Apparel',
     url: '/collections/all',
     img: '/apparel-category.jpg',
     alt: 'Snowboarder in a yellow jacket on the mountain',
-    credit: {name: 'Alessandro Maculotti', photo: 'photo-1625154869776-100eba31abbb'},
+    credit: {
+      name: 'Alessandro Maculotti',
+      photo: 'photo-1625154869776-100eba31abbb',
+    },
   },
 ];
 
 function CategoryStrip() {
   return (
     <section>
-      <div className="grid grid-cols-2 min-[45em]:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 min-[45em]:grid-cols-4 gap-3">
         {CATEGORIES.map(({label, url, img, alt, credit}) => (
           <Link
             key={label}
@@ -207,7 +209,7 @@ function RecommendedProducts({products}) {
       >
         <Await resolve={products}>
           {(response) => (
-            <div className="grid gap-4 grid-cols-2 min-[45em]:grid-cols-4">
+            <div className="grid gap-4 grid-cols-1 min-[45em]:grid-cols-4">
               {response
                 ? response.products.nodes.map((product) => (
                     <ProductItem key={product.id} product={product} />
@@ -350,6 +352,12 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       altText
       width
       height
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
+      }
     }
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)

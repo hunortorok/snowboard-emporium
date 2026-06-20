@@ -15,13 +15,11 @@ export function WishlistButton({product, variant = 'card'}) {
 
   const inlineClass = 'static shrink-0 mt-1 bg-white/85 hover:bg-white';
 
-  const svgFill = active ? 'fill-[#e63946]' : 'fill-[#555]';
-
   return (
     <button
       aria-label={active ? 'Remove from wishlist' : 'Add to wishlist'}
       aria-pressed={active}
-      className={`${baseClass} ${variant === 'card' ? cardClass : inlineClass} [&_svg]:w-[1.1rem] [&_svg]:h-[1.1rem] [&_svg]:${svgFill}`}
+      className={`${baseClass} ${variant === 'card' ? cardClass : inlineClass} [&_svg]:w-[1.1rem] [&_svg]:h-[1.1rem] ${active ? '[&_svg]:fill-[#e63946]' : '[&_svg]:fill-[#555]'}`}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

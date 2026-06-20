@@ -75,7 +75,7 @@ export default function Collection() {
       </div>
       <PaginatedResourceSection
         connection={collection.products}
-        resourcesClassName="grid gap-4 grid-cols-2 min-[45em]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] mb-8"
+        resourcesClassName="grid gap-4 grid-cols-1 min-[45em]:grid-cols-4 mb-8"
       >
         {({node: product, index}) => (
           <ProductItem
@@ -119,6 +119,12 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       }
       maxVariantPrice {
         ...MoneyProductItem
+      }
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
       }
     }
   }

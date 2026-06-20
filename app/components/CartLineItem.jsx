@@ -29,34 +29,29 @@ export function CartLineItem({layout, line, childrenMap}) {
           </div>
         )}
 
-        <div className="flex-1 min-w-0">
-          <Link
-            prefetch="intent"
-            to={lineItemUrl}
-            className="hover:no-underline"
-            onClick={() => {
-              if (layout === 'aside') {
-                closeCart();
-              }
-            }}
-          >
-            <p className="font-heading font-semibold text-sm text-twilight-indigo-900 m-0 leading-snug line-clamp-2">
-              {product.title}
-            </p>
-          </Link>
-          <div className="mt-1">
-            <ProductPrice price={line?.cost?.totalAmount} />
+        <div className="flex-1 min-w-0 flex flex-col">
+          <div>
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              className="hover:no-underline"
+              onClick={() => {
+                if (layout === 'aside') {
+                  closeCart();
+                }
+              }}
+            >
+              <p className="font-heading font-semibold text-sm text-twilight-indigo-900 m-0 leading-snug line-clamp-2">
+                {product.title}
+              </p>
+            </Link>
+            <div className="mt-1">
+              <ProductPrice price={line?.cost?.totalAmount} />
+            </div>
           </div>
-          <ul className="mt-1 space-y-0">
-            {selectedOptions.map((option) => (
-              <li key={option.name} className="mb-0">
-                <span className="text-xs text-twilight-indigo-400">
-                  {option.name}: {option.value}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <CartLineQuantity line={line} />
+          <div className="mt-auto pt-2">
+            <CartLineQuantity line={line} />
+          </div>
         </div>
       </div>
 

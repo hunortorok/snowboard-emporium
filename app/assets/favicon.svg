@@ -1,28 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none">
-  <style>
-    .stroke {
-      stroke: #000;
-    }
-    .fill {
-      fill: #000;
-    }
-    @media (prefers-color-scheme: dark) {
-      .stroke {
-        stroke: #fff;
-      }
-      .fill {
-        fill: #fff;
-      }
-    }
-  </style>
-  <path
-    class="stroke"
-    fill-rule="evenodd"
-    d="M16.1 16.04 1 8.02 6.16 5.3l5.82 3.09 4.88-2.57-5.82-3.1L16.21 0l15.1 8.02-5.17 2.72-5.5-2.91-4.88 2.57 5.5 2.92-5.16 2.72Z"
-  />
-  <path
-    class="fill"
-    fill-rule="evenodd"
-    d="M16.1 32 1 23.98l5.16-2.72 5.82 3.08 4.88-2.57-5.82-3.08 5.17-2.73 15.1 8.02-5.17 2.72-5.5-2.92-4.88 2.58 5.5 2.92L16.1 32Z"
-  />
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#e67219" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" y1="2" x2="12" y2="22" />
+  <line x1="2" y1="12" x2="22" y2="12" />
+  <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+  <line x1="19.07" y1="4.93" x2="4.93" y2="19.07" />
+  <circle cx="12" cy="12" r="2" fill="#e67219" stroke="none" />
+  <polyline points="12 2 10 6 14 6 12 2" />
+  <polyline points="12 22 10 18 14 18 12 22" />
+  <polyline points="2 12 6 10 6 14 2 12" />
+  <polyline points="22 12 18 10 18 14 22 12" />
 </svg>
