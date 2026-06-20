@@ -53,12 +53,12 @@ This project uses the Shopify Hydrogen platform to connect to a dev Shopify stor
 
 **Setup:**
 
-\`\`\`bash
+```bash
 git clone https://github.com/hunortorok/snowboard-emporium.git
 cd hydrogen-quickstart
 npm install
 cp .env.example .env   # then fill in your values
-\`\`\`
+```
 
 **Environment variables** (`.env`):
 
