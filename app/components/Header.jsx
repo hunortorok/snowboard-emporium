@@ -13,7 +13,7 @@ const NAV_ITEMS = [
 export function Header({header, cart}) {
   const {shop} = header;
   return (
-    <header className="flex items-center bg-twilight-indigo-700 border-b-2 border-powder-petal-500 h-16 px-4 min-[45em]:px-32 sticky top-0 z-[1]">
+    <header className="flex items-center bg-twilight-indigo-700 border-b-2 border-powder-petal-500 h-16 px-4 min-[45em]:px-32 sticky top-0 z-1">
       <div className="flex-1">
         <NavLink prefetch="intent" to="/" end className="hover:no-underline">
           <span className="flex items-center gap-2">
@@ -48,7 +48,9 @@ export function HeaderMenu({viewport}) {
         <NavLink
           className={({isActive}) =>
             `cursor-pointer px-2 py-1 inline-flex flex-col items-center border-b-2 no-underline hover:no-underline after:block after:h-0 after:overflow-hidden after:invisible after:font-bold after:content-[attr(data-title)] transition-colors ${
-              viewport === 'desktop' ? 'text-powder-blue-100' : 'text-twilight-indigo-700'
+              viewport === 'desktop'
+                ? 'text-powder-blue-100'
+                : 'text-twilight-indigo-700'
             } ${
               isActive
                 ? 'border-powder-petal-500 font-bold'
@@ -71,10 +73,7 @@ export function HeaderMenu({viewport}) {
 
 function HeaderCtas({cart}) {
   return (
-    <nav
-      className="flex items-center gap-4 [&>*]:min-w-fit"
-      role="navigation"
-    >
+    <nav className="flex items-center gap-4 *:min-w-fit" role="navigation">
       <HeaderMenuMobileToggle />
       <WishlistBadge />
       <CartToggle cart={cart} />
@@ -106,8 +105,22 @@ function WishlistBadge() {
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
-    <button className="reset min-[48em]:hidden text-powder-blue-100" onClick={() => open('mobile')}>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <button
+      className="reset min-[48em]:hidden text-powder-blue-100"
+      onClick={() => open('mobile')}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
         <line x1="3" y1="6" x2="21" y2="6" />
         <line x1="3" y1="12" x2="21" y2="12" />
         <line x1="3" y1="18" x2="21" y2="18" />

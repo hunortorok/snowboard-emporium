@@ -99,7 +99,7 @@ function CategoryStrip() {
             prefetch="intent"
             className="group relative rounded-xl overflow-hidden hover:no-underline"
           >
-            <div className="aspect-[3/4]">
+            <div className="aspect-3/4">
               <img
                 src={img}
                 alt={alt}
@@ -132,7 +132,7 @@ function FeaturedCollection({collection}) {
         className="block relative rounded-xl overflow-hidden hover:no-underline"
         to={`/collections/${collection.handle}`}
       >
-        <div className="aspect-[16/7]">
+        <div className="aspect-16/7">
           {image ? (
             <Image
               data={image}
