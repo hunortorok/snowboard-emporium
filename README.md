@@ -1,5 +1,7 @@
 # Snowboard Emporium Mock Ecommerce Site
 
+<img width="1392" height="860" alt="Screenshot 2026-06-20 at 15 17 25" src="https://github.com/user-attachments/assets/481f1ca0-9665-4d71-8f0c-d257bad7afa0" />
+
 This is a mock Shopify Hydrogen ecommerce shop for learning purposes.
 
 ## Overview
