@@ -41,9 +41,9 @@ This project uses the Shopify Hydrogen platform to connect to a dev Shopify stor
 
 ## What I Learned
 
-- Gained a deeper understanding of React Router SSR patterns — loaders, actions, and how data flows server-to-client.
+- Gained a deeper understanding of React Router SSR patterns: loaders, actions, and how data flows server-to-client.
 - Got familiar with Shopify Hydrogen fundamentals: its built-in components, server-authoritative cart state, and the request-scoped storefront client.
-- Practical experience with Zustand, including the boundary of what belongs in client state — UI flags and the wishlist — versus what stays server-authoritative.
+- Practical experience with Zustand, including the boundary of what belongs in client state, UI flags and the wishlist, versus what stays server-authoritative.
 
 ## Getting Started
 
