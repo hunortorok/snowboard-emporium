@@ -91,7 +91,7 @@ function CartLineQuantity({line}) {
             disabled={quantity <= 1 || !!isOptimistic}
             name="decrease-quantity"
             value={prevQuantity}
-            className="w-8 h-8 flex items-center justify-center text-twilight-indigo-700 hover:bg-ash-brown-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-twilight-indigo-700 hover:bg-ash-brown-50 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
           >
             &#8722;
           </button>
@@ -105,7 +105,7 @@ function CartLineQuantity({line}) {
             name="increase-quantity"
             value={nextQuantity}
             disabled={!!isOptimistic}
-            className="w-8 h-8 flex items-center justify-center text-twilight-indigo-700 hover:bg-ash-brown-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-twilight-indigo-700 hover:bg-ash-brown-50 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
           >
             &#43;
           </button>
@@ -127,9 +127,16 @@ function CartLineRemoveButton({lineIds, disabled}) {
       <button
         disabled={disabled}
         type="submit"
-        className="text-xs text-twilight-indigo-400 hover:text-powder-blush-500 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        aria-label="Remove item"
+        className="text-twilight-indigo-400 hover:text-red-500 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
       >
-        Remove
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polyline points="3 6 5 6 21 6" />
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+          <path d="M10 11v6" />
+          <path d="M14 11v6" />
+          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+        </svg>
       </button>
     </CartForm>
   );

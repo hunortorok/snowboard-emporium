@@ -1,6 +1,7 @@
 import {CartForm, Money} from '@shopify/hydrogen';
 import {useEffect, useRef} from 'react';
-import {useFetcher} from 'react-router';
+import {Link, useFetcher} from 'react-router';
+import {useUIStore} from '~/stores/ui.store';
 
 export function CartSummary({cart, layout}) {
   const className =
@@ -8,30 +9,39 @@ export function CartSummary({cart, layout}) {
       ? 'relative'
       : 'bg-powder-blue-50 border-t border-dark bottom-0 pt-3 mb-4 absolute w-[calc(var(--aside-width)-40px)]';
 
+  const subTotalClassName =
+    layout === 'page'
+      ? 'flex items-center gap-2 py-3 border-t border-ash-brown-200'
+      : 'flex items-center justify-between py-3 border-t border-ash-brown-200';
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <dl className="flex items-center justify-between py-3 border-t border-ash-brown-200">
-        <dt className="font-heading font-semibold text-sm text-twilight-indigo-900">Subtotal</dt>
-        <dd className="font-heading font-bold text-twilight-indigo-900">
-          {cart?.cost?.subtotalAmount?.amount ? (
-            <Money data={cart?.cost?.subtotalAmount} />
-          ) : (
-            '-'
-          )}
-        </dd>
-      </dl>
-      <CartDiscounts discountCodes={cart?.discountCodes} />
-      <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
-      <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+      <div className="md:mx-auto">
+        <dl className={subTotalClassName}>
+          <dt className="font-heading font-semibold text-sm text-twilight-indigo-900">
+            Subtotal
+          </dt>
+          <dd className="font-heading font-bold text-twilight-indigo-900">
+            {cart?.cost?.subtotalAmount?.amount ? (
+              <Money data={cart?.cost?.subtotalAmount} />
+            ) : (
+              '-'
+            )}
+          </dd>
+        </dl>
+        <CartDiscounts discountCodes={cart?.discountCodes} />
+        <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
+      </div>
+      <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} layout={layout} />
     </div>
   );
 }
 
-function CartCheckoutActions({checkoutUrl}) {
+function CartCheckoutActions({checkoutUrl, layout}) {
+  const closeCart = useUIStore((s) => s.closeCart);
   if (!checkoutUrl) return null;
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 flex flex-col gap-2">
       <a
         href={checkoutUrl}
         target="_self"
@@ -39,6 +49,16 @@ function CartCheckoutActions({checkoutUrl}) {
       >
         Continue to Checkout &rarr;
       </a>
+      {layout === 'aside' && (
+        <Link
+          to="/cart"
+          onClick={closeCart}
+          prefetch="intent"
+          className="block w-full bg-powder-petal-300 hover:bg-powder-petal-400 text-twilight-indigo-900 text-center font-heading font-semibold text-sm tracking-wide py-4 rounded-lg transition-colors hover:no-underline"
+        >
+          View My Cart
+        </Link>
+      )}
     </div>
   );
 }
